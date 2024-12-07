@@ -38,7 +38,7 @@
                         @csrf
 
 
-                        <input type="hidden" name="id" value="{{ $facility->id }}">
+                        {{-- <input type="hidden" name="id" value="{{ $facility->id }}"> --}}
 
                         <div class="mb-3 row">
                             <label for="nama" class="col-md-2 col-form-label">Nama</label>
