@@ -27,11 +27,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    
 
-                    <form class="form" action="{{ route('rw.update') }}" method="POST">
+                    <form class="form" action="{{ route('rw.update', ['id' => $rw->id]) }}" method="POST">
                         @csrf
-
-                        <input type="hidden" name="id" value="{{ $rw->id }}">
 
 
                         <div class="mb-3 row">

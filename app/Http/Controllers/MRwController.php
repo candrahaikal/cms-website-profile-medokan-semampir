@@ -95,17 +95,17 @@ class MRwController extends Controller
      */
     public function update(Request $request)
     {
+        $rw = MRw::findOrFail($request->id);
+        
         $request->validate([
             'name' => 'required|string|max:255',
-            'status' => 'nullable|boolean',
+            'status' => 'nullable',
             'description' => 'nullable|string',
         ]);
 
-        $rw = MRw::findOrFail($request->id);
-
         $rw->update([
             'name' => $request->name,
-            'status' => $request->has('status'), // Checkbox menghasilkan boolean
+            'status' => $request->status === 'on' ? 1 : 0,
             'description' => $request->description
         ]);
 
