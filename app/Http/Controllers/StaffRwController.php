@@ -147,25 +147,35 @@ class StaffRwController extends Controller
      * @param  \App\Models\StaffRw  $staffRw
      * @return \Illuminate\Http\Response
      */
-    public function destroy($rw_id, $id)
+    public function destroy(Request $request)
 {
-    // Cari data StaffRw berdasarkan ID dan RW_ID
-    $staffRw = StaffRw::where('id', $id)->where('rw_id', $rw_id)->first();
+    $staffRw = StaffRw::findOrFail($request->id);
+    $rwId = $staffRw->rw_id;
 
-    if (!$staffRw) {
-        return redirect()->route('staff-rw.index', ['rw' => $rw_id])
+    if(!$staffRw) {
+        return redirect()->route('staff-rw.index', ['rw' => $rwId])
             ->with('error', 'Data Pegawai RW tidak ditemukan.');
+    } else {
+        $staffRw->delete();
+
+        return redirect()->route('staff-rw.index', ['rw' => $rwId])
+            ->with('success', 'Pegawai RW berhasil dihapus.');
     }
 
-    try {
-        // Hapus data
-        $staffRw->delete();
-        return redirect()->route('staff-rw.index', ['rw' => $rw_id])
-            ->with('success', 'Pegawai RW berhasil dihapus.');
-    } catch (\Exception $e) {
-        return redirect()->route('staff-rw.index', ['rw' => $rw_id])
-            ->with('error', 'Gagal menghapus Pegawai RW. Silakan coba lagi.');
-    }
+    // if (!$staffRw) {
+    //     return redirect()->route('staff-rw.index', ['rw' => $rw_id])
+    //         ->with('error', 'Data Pegawai RW tidak ditemukan.');
+    // }
+
+    // try {
+    //     // Hapus data
+    //     $staffRw->delete();
+    //     return redirect()->route('staff-rw.index', ['rw' => $rw_id])
+    //         ->with('success', 'Pegawai RW berhasil dihapus.');
+    // } catch (\Exception $e) {
+    //     return redirect()->route('staff-rw.index', ['rw' => $rw_id])
+    //         ->with('error', 'Gagal menghapus Pegawai RW. Silakan coba lagi.');
+    // }
 }
 
 }

@@ -30,11 +30,7 @@
 
                     {{-- <h4 class="card-title">Company</h4> --}}
                     <p class="card-title-desc">
-                        This page presents a comprehensive overview of all available data, displayed in an interactive
-                        and sortable DataTable format. Each row represents a unique data, providing key details such as
-                        name, description, and status. Utilize the <b>column visibility, sorting, and column
-                            search bar</b> features to
-                        customize your view and quickly access the specific information you need.
+                        Berikut ini adalah tabel yang menunjukkan daftar RW yang ada di Medokan Semampir.
                     </p>
 
                     <table id="datatable" class="table table-bordered dt-responsive nowrap w-100" data-colvis="[]">
@@ -42,6 +38,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nama</th>
+                                <th>Deskripsi</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -52,6 +49,12 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $rw->name }}</td>
+                                    @if ($rw->description == null)
+                                    <td class="text-truncate">-</td>
+                                    @else
+
+                                    <td class="text-truncate">{!! $rw->description !!}</td>
+                                    @endif
                                     <td>
                                         @if ($rw->status == 1)
                                             <span class="badge bg-success fs-6 p-2">Aktif</span>
@@ -61,6 +64,7 @@
                                     </td>
                                     <td class="data-small">
                                         <a href="{{ route('rw.edit', ['id' => $rw->id]) }}" class="btn btn-success">Ubah</a>
+                                        <a href="{{ route('rt.index', ['rw_id' => $rw->id]) }}" class="btn btn-outline-primary">Detail RT</a>
                                         <form action="{{ route('rw.delete', ['id' => $rw->id]) }}" method="POST"
                                             class="d-inline-block">
                                             @csrf
@@ -75,6 +79,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nama</th>
+                                <th>Deskripsi</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>

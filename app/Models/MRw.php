@@ -13,6 +13,7 @@ class MRw extends Model
 
     protected $fillable = [
         'name',
-        'status'
+        'status',
+        'description'
     ];
 }

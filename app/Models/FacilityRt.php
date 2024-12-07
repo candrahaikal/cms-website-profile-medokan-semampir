@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Facility extends Model
+class FacilityRt extends Model
 {
     use HasFactory;
 
-    protected $table = 'facility';
+    protected $table = 'facility_rt';
 
     protected $fillable = [
         'rt_id',
         'name',
         'description',
-        'contact',
         'link_maps',
+        'status',
         'image'
     ];
 

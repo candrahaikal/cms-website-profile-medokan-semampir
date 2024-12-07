@@ -28,8 +28,8 @@
             <div class="card">
                 <div class="card-body">
                     {{-- <div class="h4 card-title">Silakan tambahkan data Pegawai RW</div> --}}
-                    <p class="card-title-desc">Here are examples of <code>.form-control</code> applied to each textual HTML5
-                        <code>&lt;input&gt;</code> <code>type</code>.
+                    <p class="card-title-desc">
+                        Tambahkan data Pegawai RW {{ $rw_id }} dengan melengkapi form di bawah ini.
                     </p>
 
                     <form class="form" action="{{ route('staff-rw.store') }}" method="POST">

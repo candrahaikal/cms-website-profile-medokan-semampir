@@ -18,25 +18,28 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class='bx bxs-graduation'></i>
+                        <i class='bx bxs-component'></i>
                         <span key="t-class">Utama</span>
                     </a>
+
+
+
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('rw.index') }}" key="m-rw">RW</a></li>
-                        <li><a href="{{ route('rt.index') }}" key="m-rw">RT</a></li>
+                        {{-- <li><a href="{{ route('rt.index') }}" key="m-rw">RT</a></li> --}}
                         <li><a href="{{ route('staff-category.index') }}" key="m-staff-category">Jabatan</a></li>
                     </ul>
                 </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class='bx bxs-graduation'></i>
+                        <i class='bx bxs-user-rectangle'></i>
                         <span key="t-class">Pegawai RW</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
 
                         @php
-                            $rws = App\Models\MRw::all();
+                            $rws = App\Models\MRw::orderBy('name', 'asc')->get();
                         @endphp
 
                         @foreach ($rws as $rw)
@@ -46,37 +49,60 @@
                     </ul>
                 </li>
 
+                @php
+                    $rts = App\Models\MRt::all();
+                @endphp
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class='bx bxs-graduation'></i>
+                        <i class='bx bxs-user-account'></i>
                         <span key="t-class">Pegawai RT</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
 
-                        @php
-                            $rts = App\Models\MRt::all();
-                        @endphp
-
-                        @foreach ($rts as $rt)
-                            <li><a href="{{ route('staff-rt.index', ['rt' => $rt->id]) }}"
-                                    key="rt-{{ $rt->id }}">{{ $rt->name }}</a></li>
+                        @foreach ($rws as $rw)
+                            <li><a href="{{ route('staff-rt.index', ['rw' => $rw->id]) }}"
+                                    key="rw-{{ $rw->id }}">{{ $rw->name }}</a></li>
                         @endforeach
                     </ul>
                 </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class='bx bxs-graduation'></i>
+                        <i class='bx bxs-building'></i>
                         <span key="t-class">Fasilitas RW</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
 
-                        @php
-                            $rws = App\Models\MRw::all();
-                        @endphp
+                        @foreach ($rws as $rw)
+                            <li><a href="{{ route('facility-rw.index', ['rw' => $rw->id]) }}"
+                                    key="rw-{{ $rw->id }}">{{ $rw->name }}</a></li>
+                        @endforeach
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class='bx bxs-buildings'></i>
+                        <span key="t-class">Fasilitas RT</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
 
                         @foreach ($rws as $rw)
-                            <li><a href="{{ route('facility.index', ['rw' => $rw->id]) }}"
+                            <li><a href="{{ route('facility-rt.index', ['rw' => $rw->id]) }}"
+                                    key="rw-{{ $rw->id }}">{{ $rw->name }}</a></li>
+                        @endforeach
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class='bx bxs-cart-alt' ></i>
+                        <span key="t-class">UMKM</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+
+                        @foreach ($rws as $rw)
+                            <li><a href="{{ route('umkm.index', ['rw' => $rw->id]) }}"
                                     key="rw-{{ $rw->id }}">{{ $rw->name }}</a></li>
                         @endforeach
                     </ul>
@@ -85,15 +111,14 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class='bx bxs-graduation'></i>
-                        <span key="t-class">Fasilitas RT</span>
+                        <i class='bx bxs-calendar-check'></i>
+                        <span key="t-class">Kegiatan</span>
                     </a>
-
                     <ul class="sub-menu" aria-expanded="false">
 
-                        @foreach ($rts as $rt)
-                            <li><a href="{{ route('facility.index', ['rt' => $rt->id]) }}"
-                                    key="rt-{{ $rt->id }}">{{ $rt->name }}</a></li>
+                        @foreach ($rws as $rw)
+                            <li><a href="{{ route('event.index', ['rw' => $rw->id]) }}"
+                                    key="rw-{{ $rw->id }}">{{ $rw->name }}</a></li>
                         @endforeach
                     </ul>
                 </li>

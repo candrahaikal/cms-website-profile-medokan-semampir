@@ -11,9 +11,9 @@
 
 #floating-add-button {
     position: fixed;
-    bottom: 50px;
+    bottom: 40px;
     /* Sesuaikan dengan posisi vertikal yang Anda inginkan */
-    right: 70px;
+    right: 30px;
     /* Sesuaikan dengan posisi horizontal yang Anda inginkan */
     z-index: 1000;
     /* Pastikan z-index cukup tinggi untuk menampilkan tombol di atas elemen lain */
@@ -42,3 +42,5 @@
     background-color: #0442de;
     /* Warna latar belakang tombol WhatsApp saat dihover */
 }
+
+

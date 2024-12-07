@@ -20,43 +20,183 @@
     </div>
     <!-- end page title -->
 
-    <div class="row">
-        <div class="col-lg-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Tes: 60</h5>
+    <div class="row d-flex align-items-stretch">
+        <div class="col-lg-4">
+            <div class="overflow-hidden card">
+                <div class="bg-primary-subtle">
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="text-primary p-3">
+                                <h5 class="text-primary">Selamat Datang!</h5>
+                            </div>
+                        </div>
+                        <div class="align-self-end col-5"><img src="{{ asset('assets/images/profile-img.png') }}"
+                                alt="" class="img-fluid"></div>
+                    </div>
+                </div>
+                <div class="pt-0 card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="avatar-md profile-user-wid mb-4"><img
+                                    src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt=""
+                                    class="img-thumbnail rounded-circle"></div>
+                            <h5 class="font-size-15">{{ auth()->user()->name }}</h5>
+                            <p class="text-muted mb-0">{{ auth()->user()->role }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Tes: 60</h5>
+
+        <div class="col-lg-8">
+
+            <div class="row">
+                {{-- <h4 class="mb-sm-0 font-size-18">Data Penduduk</h4> --}}
+
+                <div class="col-md-4">
+                    <div class="mini-stats-wid card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-muted fw-medium">Jumlah RT</p>
+                                    <h4 class="mb-0">{{ $totalRt }}</h4>
+                                </div>
+                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon"><span
+                                        class="avatar-title rounded-circle bg-primary"><i
+                                            class="bx bx-copy-alt font-size-24"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Tes: 60</h5>
+
+                <div class="col-md-4">
+                    <div class="mini-stats-wid card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-muted fw-medium">Jumlah RW</p>
+                                    <h4 class="mb-0">{{ $totalRw }}</h4>
+                                </div>
+                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon"><span
+                                        class="avatar-title rounded-circle bg-primary"><i
+                                            class="bx bx-copy-alt font-size-24"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Tes: 60</h5>
+
+                <div class="col-md-4">
+                    <div class="mini-stats-wid card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-muted fw-medium">Jumlah KK</p>
+                                    <h4 class="mb-0">{{ $totalKk }}</h4>
+                                </div>
+                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon"><span
+                                        class="avatar-title rounded-circle bg-primary"><i
+                                            class="bx bxs-user-pin font-size-24"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="col-md-4">
+                    <div class="mini-stats-wid card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-muted fw-medium">Jumlah Penduduk</p>
+                                    <h4 class="mb-0">{{ $totalPopulation }}</h4>
+                                </div>
+                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon"><span
+                                        class="avatar-title rounded-circle bg-primary"><i
+                                            class="bx bxs-user font-size-24"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- </div> --}}
+
+
+            {{-- <div class="row"> --}}
+                <div class="col-md-4">
+                    <div class="mini-stats-wid card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-muted fw-medium">Fasilitas Umum</p>
+                                    <h4 class="mb-0">{{ $totalFacility }}</h4>
+                                </div>
+                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon"><span
+                                        class="avatar-title rounded-circle bg-primary"><i
+                                            class="bx bxs-bank font-size-24"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="mini-stats-wid card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-muted fw-medium">Jumlah Kegiatan</p>
+                                    <h4 class="mb-0">{{ $totalEvents  }}</h4>
+                                </div>
+                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon"><span
+                                        class="avatar-title rounded-circle bg-primary"><i
+                                            class="bx bx-calendar-event font-size-24"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="mini-stats-wid card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-muted fw-medium">Jumlah Pegawai</p>
+                                    <h4 class="mb-0">{{ $totalStaffs }}</h4>
+                                </div>
+                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon"><span
+                                        class="avatar-title rounded-circle bg-primary"><i
+                                            class="bx bx-briefcase-alt font-size-24"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- <div class="col-md-4">
+                    <div class="mini-stats-wid card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-muted fw-medium">Orders</p>
+                                    <h4 class="mb-0">1,235</h4>
+                                </div>
+                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon"><span
+                                        class="avatar-title rounded-circle bg-primary"><i
+                                            class="bx bx-copy-alt font-size-24"></i></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+
             </div>
+
+
         </div>
     </div>
+
 
 
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    
+
                 </div>
             </div>
         </div>

@@ -43,13 +43,17 @@
                     <img src="{{ asset('assets/images/default_profile.png') }}" alt=""
                         class="rounded-circle header-profile-user">
                     <span class="d-none d-xl-inline-block ms-1" key="t-henry">
-                        William</span>
+                        {{ Auth::user()->name }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item text-danger" href="{{ route('logout.post') }}"><i
+                    <form action="{{ route('logout.post') }}" method="POST">
+                        @csrf
+                        <button class="dropdown-item text-danger" type="submit"><i
                             class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span
-                            key="t-logout">Logout</span></a>
+                            key="t-logout">Keluar</span></button>
+                    </form>
+
                 </div>
             </div>
 

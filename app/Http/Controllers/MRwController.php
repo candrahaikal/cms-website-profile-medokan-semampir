@@ -16,7 +16,7 @@ class MRwController extends Controller
      */
     public function index()
     {
-        $rws = MRw::all();
+        $rws = MRw::orderBy('name')->get();
         return view('pages.m_rw.index', compact('rws'));
     }
 
@@ -41,21 +41,22 @@ class MRwController extends Controller
         // Validasi data dari form
         $validatedData = $request->validate([
             'name' => 'required|string|max:255', // Nama RT wajib diisi
-            'status' => 'nullable|boolean', // Status bisa kosong, default dianggap false
+            'status' => 'nullable', // Status bisa kosong, default dianggap false
+            'description' => 'nullable|string',
         ]);
 
 
         try {
             // Simpan data ke database
             Mrw::create([
-                'name' => $validatedData['name'],
-                'status' => $request->has('status') ? true : false, // Checkbox menghasilkan boolean
+                'name' => strtoupper($validatedData['name']),
+                'description' => $validatedData['description'],
+                'status' => $request->status === 'on' ? 1 : 0, // Checkbox menghasilkan boolean
             ]);
-
-
 
             // Redirect dengan pesan sukses
             return redirect()->route('rw.index')->with('success', 'RW berhasil ditambahkan.');
+
         } catch (\Exception $e) {
             // Redirect dengan pesan error jika ada kegagalan
             return redirect()->back()->with('error', 'Gagal menyimpan data RW. Silakan coba lagi.');
@@ -96,12 +97,16 @@ class MRwController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'status' => 'nullable|boolean',
+            'description' => 'nullable|string',
         ]);
 
         $rw = MRw::findOrFail($request->id);
+
         $rw->update([
             'name' => $request->name,
-            'status' => $request->has('status'),
+            'status' => $request->has('status'), // Checkbox menghasilkan boolean
+            'description' => $request->description
         ]);
 
         return redirect()->route('rw.index')->with('success', 'Data RW berhasil diperbarui.');

@@ -7,13 +7,13 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Daftar Kategori Jabatan</h4>
+                <h4 class="mb-sm-0 font-size-18">Daftar Jenis Jabatan</h4>
 
                 <!-- begin breadcrumb -->
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Utama</a></li>
-                        <li class="breadcrumb-item active">Daftar Kategori Jabatan</li>
+                        <li class="breadcrumb-item active">Daftar Jenis Jabatan</li>
                     </ol>
                 </div>
                 <!-- end breadcrumb -->
@@ -30,11 +30,7 @@
 
                     {{-- <h4 class="card-title">Company</h4> --}}
                     <p class="card-title-desc">
-                        This page presents a comprehensive overview of all available data, displayed in an interactive
-                        and sortable DataTable format. Each row represents a unique data, providing key details such as
-                        name, description, and status. Utilize the <b>column visibility, sorting, and column
-                            search bar</b> features to
-                        customize your view and quickly access the specific information you need.
+                        Berikut ini adalah tabel yang menunjukkan daftar Jenis Jabatan yang ada di Kelurahan Medokan Semampir. Data berikut ini dapat digunakan untuk mengatur jabatan RW dan RT.
                     </p>
 
                     <table id="datatable" class="table table-bordered dt-responsive nowrap w-100" data-colvis="[]">

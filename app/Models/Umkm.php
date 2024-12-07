@@ -17,6 +17,7 @@ class Umkm extends Model
         'description',
         'contact',
         'link_maps',
+        'link_order',
         'image'
     ];
 

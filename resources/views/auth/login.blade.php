@@ -31,21 +31,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <title>Login - Maxy</title>
+    <title>Login | {{ config('app.name') }}</title>
 </head>
 
 <body>
     <section style="height: 100vh">
         <div class="container h-100">
             <div class="row justify-content-center align-items-center h-100">
-                <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="col-md-8 col-lg-6 col-xl-5 p-3">
                     <div class="overflow-hidden card">
                         <div class="bg-primary-subtle">
                             <div class="row">
                                 <div class="col-7 col">
                                     <div class="text-primary p-4">
-                                        <h5 class="text-primary">Welcome Back!</h5>
-                                        <p>Sign in to continue to CMS</p>
+                                        <h5 class="text-primary">Selamat Datang!</h5>
+                                        <p>CMS Profil Medokan Semampir</p>
                                     </div>
                                 </div>
                                 <div class="col-5 align-self-end col"><img
@@ -66,52 +66,70 @@
                                                 class="rounded-circle" height="34"></span></div>
                                 </a></div>
                             <div class="p-2">
-                                <form class="form-horizontal">
-                                    <div class="mb-3"><label class="form-label form-label">Username</label><input
-                                            name="username" placeholder="Enter username" type="text"
-                                            class="form-control form-control" aria-invalid="false" value=""></div>
-                                    <div class="mb-3"><label class="form-label form-label">Password</label>
-                                        <div class="input-group auth-pass-inputgroup"><input name="password"
-                                                placeholder="Enter Password" type="password" class="form-control"
-                                                aria-invalid="false" value=""><button class="btn btn-light "
-                                                type="button" id="password-addon"><i
-                                                    class="mdi mdi-eye-outline"></i></button></div>
+                                <form class="form-horizontal" method="POST" action="{{ route('login.post') }}">
+                                    @csrf
+
+                                    @if ($errors->has('login'))
+                                        <div class="alert alert-danger text-center">
+                                            {{ $errors->first('login') }}
+                                        </div>
+                                    @endif
+
+                                    <div class="mb-3">
+                                        <label class="form-label form-label">Email</label>
+                                        <input name="email" placeholder="Masukkan email" type="text"
+                                            class="form-control form-control" aria-invalid="false" required>
                                     </div>
-                                    <div class="form-check"><input type="checkbox" class="form-check-input"
-                                            id="customControlInline"><label class="form-check-label"
-                                            for="customControlInline">Remember me</label></div>
+                                    <div class="mb-3">
+                                        <label class="form-label form-label">Kata Sandi</label>
+                                        <div class="input-group auth-pass-inputgroup">
+                                            <input name="password" placeholder="Masukkan kata sandi" type="password"
+                                                id="password-input" class="form-control" aria-invalid="false" required>
+                                            <button class="btn btn-light " type="button" id="password-toggle">
+                                                <i class="mdi mdi-eye-outline" id="password-icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
                                     <div class="mt-3 d-grid"><button class="btn btn-primary btn-block "
-                                            type="submit">Log In</button></div>
-                                    <div class="mt-4 text-center">
-                                        <h5 class="font-size-14 mb-3">Sign in with</h5>
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item"><a
-                                                    class="social-list-item bg-primary text-white border-primary"
-                                                    href="/pages-login"><i class="mdi mdi-facebook"></i></a></li>
-                                            <li class="list-inline-item"><a
-                                                    class="social-list-item bg-info text-white border-info"
-                                                    href="/pages-login"><i class="mdi mdi-twitter"></i></a></li>
-                                            <li class="list-inline-item"><a
-                                                    class="social-list-item bg-danger text-white border-danger"
-                                                    href="/pages-login"><i class="mdi mdi-google"></i></a></li>
-                                        </ul>
-                                    </div>
+                                            type="submit">Masuk</button></div>
+
                                     <div class="mt-4 text-center"><a class="text-muted" href="/pages-forgot-pwd"><i
-                                                class="mdi mdi-lock me-1"></i> Forgot your password?</a></div>
+                                                class="mdi mdi-lock me-1"></i>Lupa password?</a></div>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div class="mt-5 text-center">
-                        <p>Don't have an account ? <a class="fw-medium text-primary"
-                                href="/pages-login/pages-register">
-                                Signup now </a> </p>
-                        <p>© 2024 Skote. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                        {{-- <p>Don't have an account ? <a class="fw-medium text-primary" href="/pages-login/pages-register">
+                                Signup now </a> </p> --}}
+                        <p><span class="fw-bold">© {{ date('Y') }} KKN NR-05 - Universitas 17 Agustus 1945
+                                Surabaya.</span>
+                            <span class="text-secondary d-none d-lg-inline"><br> Made with <i
+                                    class="mdi mdi-heart text-danger"></i> by Candra Haikal</span>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Script -->
+    <script>
+        document.getElementById('password-toggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password-input');
+            const passwordIcon = document.getElementById('password-icon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.classList.remove('mdi-eye-outline');
+                passwordIcon.classList.add('mdi-eye-off-outline');
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.classList.remove('mdi-eye-off-outline');
+                passwordIcon.classList.add('mdi-eye-outline');
+            }
+        });
+    </script>
 </body>
 
 </html>

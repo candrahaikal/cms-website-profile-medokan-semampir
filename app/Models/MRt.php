@@ -14,7 +14,10 @@ class MRt extends Model
     protected $fillable = [
         'rw_id',
         'name',
-        'status'
+        'description',
+        'status',
+        'kk',
+        'population',
     ];
 
     public function rw()
