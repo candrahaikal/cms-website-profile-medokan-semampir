@@ -122,3 +122,31 @@
         </div>
     </div>
 @endsection
+
+@section('script')
+    <script>
+        // Menambahkan SweetAlert konfirmasi hapus
+        document.querySelectorAll('.btn-danger').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Mencegah form submit langsung
+
+                const form = this.closest('form'); // Ambil form yang terdekat
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Data ini akan dihapus secara permanen.",
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Hapus!',
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit(); // Submit form jika konfirmasi "Ya, Hapus!"
+                    }
+                });
+            });
+        });
+    </script>
+@endsection
