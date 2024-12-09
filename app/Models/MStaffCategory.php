@@ -13,6 +13,7 @@ class MStaffCategory extends Model
 
     protected $fillable = [
         'name',
-        'status'
+        'status',
+        'order'
     ];
 }

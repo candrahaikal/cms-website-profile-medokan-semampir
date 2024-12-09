@@ -32,28 +32,8 @@
                         <code>&lt;input&gt;</code> <code>type</code>.
                     </p>
 
-                    <form class="form" action="{{ route('rt.update') }}" method="POST">
+                    <form class="form" action="{{ route('rt.update', ['id' => $rt->id]) }}" method="POST">
                         @csrf
-
-                        {{-- <input type="hidden" name="rw_id" value="{{ $rw_id }}"> --}}
-                        <input type="hidden" name="id" value="{{ $rt->id }}">
-
-                        {{-- <div class="mb-3 row"><label class="col-md-2 col-form-label">RW</label>
-                            <div class="col-md-10">
-                                <select class="form-control" name="rw" id="rw">
-                                    <option disabled selected>Pilih RW</option>
-                                    @foreach ($rws as $rw)
-                                        <option value="{{ $rw->id }}" {{ $rw->id == $rt->rw_id ? 'selected' : '' }}>
-                                            {{ $rw->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('rw'))
-                                    <p class="text-danger mt-1">{{ $errors->first('rw') }}</p>
-                                @endif
-
-                            </div>
-                        </div> --}}
 
 
                         <div class="mb-3 row">

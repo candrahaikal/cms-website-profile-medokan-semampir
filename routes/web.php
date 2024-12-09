@@ -62,6 +62,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [MStaffCategoryController::class, 'store'])->name('staff-category.store');
         Route::get('/edit/{id}', [MStaffCategoryController::class, 'edit'])->name('staff-category.edit');
         Route::post('/update/{id}', [MStaffCategoryController::class, 'update'])->name('staff-category.update');
+        Route::post('/update-order', [MStaffCategoryController::class, 'updateOrder'])->name('staff-category.update-order');
+
         Route::delete('/delete/{id}', [MStaffCategoryController::class, 'destroy'])->name('staff-category.delete');
     });
 

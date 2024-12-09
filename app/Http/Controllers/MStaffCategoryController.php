@@ -14,7 +14,7 @@ class MStaffCategoryController extends Controller
      */
     public function index()
     {
-        $mStaffCategories = MStaffCategory::all();
+        $mStaffCategories = MStaffCategory::orderBy('order', 'asc')->get();
         return view('pages.m_staff_category.index', compact('mStaffCategories'));
     }
 
@@ -101,8 +101,28 @@ class MStaffCategoryController extends Controller
         ]);
 
         return redirect()->route('staff-category.index')->with('success', 'Data Kategori Jabatan berhasil diperbarui.');
-
     }
+
+    public function updateOrder(Request $request)
+{
+    // Debug data yang diterima
+    dd($request->all());
+
+    $ids = $request->input('ids');
+
+    if (is_array($ids)) {
+        foreach ($ids as $index => $id) {
+            MStaffCategory::where('id', $id)->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Urutan berhasil diperbarui.']);
+    }
+
+    return response()->json(['status' => 'error', 'message' => 'Data tidak valid.'], 400);
+}
+
+
+
 
     /**
      * Remove the specified resource from storage.
