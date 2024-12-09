@@ -45,8 +45,8 @@
                             <div class="col-md-10">
                                 <select class="form-control select2" name="rt" id="rt">
                                     <option disabled selected>Pilih RT...</option>
-                                    @foreach ($rts as $rts)
-                                        <option value="{{ $rts->id }}" {{ $rts->id == $event->rt_id ? 'selected' : '' }}>{{ $rw->name }} - {{ $rts->name }}
+                                    @foreach ($rts as $rt)
+                                        <option value="{{ $rt->id }}" {{ $rt->id == $event->rt_id ? 'selected' : '' }}>{{ $rw->name }} - {{ $rt->name }}
                                         </option>
                                     @endforeach
                                 </select>

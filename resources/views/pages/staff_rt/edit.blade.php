@@ -35,12 +35,30 @@
                     <form class="form" action="{{ route('staff-rt.update', ['id' => $staffRt->id]) }}" method="POST">
                         @csrf
 
+                        {{-- Field RT --}}
+                        <div class="mb-3 row"><label class="col-md-2 col-form-label">Pilih RT</label>
+                            <div class="col-md-10">
+                                <select class="form-control select2" name="rt" id="rt">
+                                    <option disabled selected>Pilih RT...</option>
+                                    @foreach ($rts as $rt)
+                                        <option value="{{ $rt->id }}" {{ $rt->id == $staffRt->rt_id ? 'selected' : '' }}>{{ $rw->name }} - {{ $rt->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('rt'))
+                                    <p class="text-danger mt-1">{{ $errors->first('rt') }}</p>
+                                @endif
+
+                            </div>
+                        </div>
+                        {{-- END Field RT --}}
+
                         <div class="mb-3 row"><label class="col-md-2 col-form-label">Jabatan</label>
                             <div class="col-md-10">
                                 <select class="form-control" name="staff_category" id="staff_category">
                                     <option disabled selected>Pilih Jabatan</option>
                                     @foreach ($staffCategories as $staffCategory)
-                                        <option value="{{ $staffCategory->id }}" {{ $staffCategory->id == $staffRw->staffCategory->id ? 'selected' : ''}}>{{ $staffCategory->name }}</option>
+                                        <option value="{{ $staffCategory->id }}" {{ $staffCategory->id == $staffRt->staffCategory->id ? 'selected' : ''}}>{{ $staffCategory->name }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('staff_category'))
@@ -54,7 +72,7 @@
                             <label for="nama" class="col-md-2 col-form-label">Nama</label>
                             <div class="col-md-10">
                                 <input class="form-control" id="name" type="text" name="name"
-                                    placeholder="Contoh: Iqbal Ramadhan" value="{{ old('name', $staffRw->name) }}">
+                                    placeholder="Contoh: Iqbal Ramadhan" value="{{ old('name', $staffRt->name) }}">
                                 @if ($errors->has('name'))
                                     <p class="text-danger mt-1">{{ $errors->first('name') }}</p>
                                 @endif
@@ -66,7 +84,7 @@
                             <div class="col-md-10 d-flex gap-2 align-items-center">
                                 <label class="d-inline-block me-5 mb-0 text-secondary">Tidak Aktif</label>
                                 <input class="form-check-input" class="d-inline-block" type="checkbox" id="switch_staff_rt"
-                                    name="status" {{ $staffRw->status == 1 ? 'checked' : '' }}>
+                                    name="status" {{ $staffRt->status == 1 ? 'checked' : '' }}>
                                 <label class="d-inline-block mb-0 text-secondary">Aktif</label>
                             </div>
                         </div>

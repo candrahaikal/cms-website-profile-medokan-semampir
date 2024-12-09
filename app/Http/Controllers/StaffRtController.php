@@ -30,6 +30,7 @@ class StaffRtController extends Controller
 
         $staffRts = StaffRt::with('rt', 'staffCategory')
             ->whereIn('rt_id', $rts->pluck('id'))
+            ->orderBy('staff_category_id', 'asc')
             ->get()
             ->groupBy('rt_id'); // Kelompokkan pegawai berdasarkan RT
 
@@ -44,10 +45,13 @@ class StaffRtController extends Controller
      */
     public function create(Request $request)
     {
-        $rt_id = $request->rt_id;
+        $rw = MRw::find($request->rw);
+        $rts = MRt::where('rw_id', $rw->id)->get();
+
+        // return view('pages.facility_rt.add', compact('rw', 'rts'));
         $staffCategories = MStaffCategory::all();
 
-        return view('pages.staff_rt.add', compact('rt_id', 'staffCategories'));
+        return view('pages.staff_rt.add', compact('staffCategories', 'rts', 'rw'));
     }
 
     /**
@@ -59,36 +63,40 @@ class StaffRtController extends Controller
     public function store(Request $request)
     {
 
+        $rw = MRw::find($request->rw);
         // dd($request->all());
-
-        $rt_id = $request->rt_id;
-        $rw = MRt::find($rt_id)->rw;
 
         // Validasi data dari form
         $validatedData = $request->validate([
             'name' => 'required|string|max:255', // Nama RT wajib diisi
+            'rt' => 'required',
             'staff_category' => 'required',
-
             'status' => 'nullable', // Status bisa kosong, default dianggap false
         ]);
 
+        // dd($validatedData);
 
-        try {
+
+        // try {
             // Simpan data ke database
-            StaffRt::create([
-                'rt_id' => $rt_id,
+            $newStaffRt = StaffRt::create([
+                'rt_id' => $validatedData['rt'],
                 'staff_category_id' => $validatedData['staff_category'],
                 'name' => $validatedData['name'],
                 'status' => $request->status === "on" ? 1 : 0, // Checkbox menghasilkan boolean
             ]);
 
+            // dd($newStaffRt);
 
-            // Redirect dengan pesan sukses
-            return redirect()->route('staff-rt.index', ['rw' => $rw])->with('success', 'Pegawai RT berhasil ditambahkan.');
-        } catch (\Exception $e) {
+
+            if($newStaffRt) {
+                return redirect()->route('staff-rt.index', ['rw' => $rw->id])->with('success', 'Data Pegawai RT berhasil disimpan.');
+            }
+
+        // } catch (\Exception $e) {
             // Redirect dengan pesan error jika ada kegagalan
-            return redirect()->back()->with('error', 'Gagal menyimpan data Pwgawai RT. Silakan coba lagi.');
-        }
+            return redirect()->back()->with('error', 'Gagal menyimpan data Pegawai RT. Silakan coba lagi.');
+        // }
     }
 
     /**
@@ -113,9 +121,10 @@ class StaffRtController extends Controller
         $staffRt = StaffRt::findOrFail($request->id);
         $rt_id = $staffRt->rt_id;
         $rw = MRt::find($rt_id)->rw;
+        $rts = MRt::where('rw_id', $rw->id)->get();
         $staffCategories = MStaffCategory::all();
 
-        return view('pages.staff_rt.edit', compact('staffRt', 'rt_id', 'staffCategories', 'rw'));
+        return view('pages.staff_rt.edit', compact('staffRt', 'rt_id', 'staffCategories', 'rw', 'rts'));
     }
 
     /**
@@ -127,14 +136,14 @@ class StaffRtController extends Controller
      */
     public function update(Request $request)
     {
-        $staffRw = StaffRt::findOrFail($request->id);
-
+        $staffRt = StaffRt::findOrFail($request->id);
+        $rwId = $staffRt->rt->rw_id;
         // dd($request->all());
 
         // Validasi data dari form
         $validatedData = $request->validate([
             'name' => 'required|string|max:255', // Nama RT wajib diisi
-            'rt_id' => 'required',
+            'rt' => 'required',
             'staff_category' => 'required',
             'status' => 'nullable', // Status bisa kosong, default dianggap false
         ]);
@@ -143,17 +152,17 @@ class StaffRtController extends Controller
 
         try {
             // Simpan data ke database
-            $staffRw->update([
-                'rt_id' => $validatedData['rt_id'],
+            $staffRt->update([
+                'rt_id' => $validatedData['rt'],
                 'staff_category_id' => $validatedData['staff_category'],
                 'name' => $validatedData['name'],
-                'status' => $request->has('status') ? true : false, // Checkbox menghasilkan boolean
+                'status' => $request->has('status') === "on" ? 1 : 0, // Checkbox menghasilkan boolean
             ]);
 
 
 
             // Redirect dengan pesan sukses
-            return redirect()->route('staff-rt.index', ['rt' => $staffRw->rt_id])->with('success', 'Pegawai RT berhasil diubah.');
+            return redirect()->route('staff-rt.index', ['rw' => $rwId])->with('success', 'Pegawai RT berhasil diubah.');
         } catch (\Exception $e) {
             // Redirect dengan pesan error jika ada kegagalan
             return redirect()->back()->with('error', 'Gagal mengubah data Pwgawai RT. Silakan coba lagi.');

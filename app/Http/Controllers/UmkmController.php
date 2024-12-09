@@ -58,9 +58,9 @@ class UmkmController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'required|nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required|string|nullable',
-            'contact' => 'required|nullable ',
-            'link_maps' => 'required|string|nullable',
-            'link_order' => 'required|string|nullable',
+            'contact' => 'nullable ',
+            'link_maps' => 'nullable',
+            'link_order' => 'nullable',
             'status' => 'nullable',
         ]);
 

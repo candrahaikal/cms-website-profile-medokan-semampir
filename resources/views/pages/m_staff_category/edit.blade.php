@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Ubah Data RW</h4>
+                <h4 class="mb-sm-0 font-size-18">Ubah Data Jabatan</h4>
 
                 <!-- begin breadcrumb -->
                 <div class="page-title-right">
@@ -28,14 +28,12 @@
             <div class="card">
                 <div class="card-body">
                     {{-- <div class="h4 card-title">Silakan tambahkan data RW</div> --}}
-                    <p class="card-title-desc">Here are examples of <code>.form-control</code> applied to each textual HTML5
-                        <code>&lt;input&gt;</code> <code>type</code>.
+                    <p class="card-title-desc">Gunakan form di bawah ini untuk mengubah data jabatan
                     </p>
 
-                    <form class="form" action="{{ route('staff-category.update') }}" method="POST">
+                    <form class="form" action="{{ route('staff-category.update', ['id' => $mStaffCategory->id]) }}" method="POST">
                         @csrf
 
-                        <input type="hidden" name="id" value="{{ $mStaffCategory->id }}">
 
 
                         <div class="mb-3 row">
@@ -68,7 +66,7 @@
 
                         <div class="mb-3 row justify-content-end">
                             <div class="text-end">
-                                <button type="submit" class="btn btn-primary w-md text-center">Ubah RW</button>
+                                <button type="submit" class="btn btn-primary w-md text-center">Ubah Jabatan</button>
                             </div>
                         </div>
                     </form>

@@ -42,6 +42,7 @@
                             <div class="text-center mb-3"><img src="{{ asset('assets/images/default_profile.png') }}"
                                     alt="" class="avatar-sm rounded-circle border border-secondary-subtle">
                                 <h6 class="font-size-15 mt-3 mb-1">{{ $staffRw->name }}</h6>
+                                {{-- {{dd($staffRw->staffCategory)}} --}}
                                 <p class="mb-0 text-muted">{{ $staffRw->staffCategory->name }}</p>
                             </div>
                             {{-- <div class="d-flex mb-3 justify-content-center gap-2 text-muted">

@@ -1,19 +1,19 @@
 @extends('layouts.main')
 
-@section('title', 'Tambah Data Pegawai RT ' . $rt_id. ' | Medokan Semampir')
+@section('title', 'Tambah Data Pegawai ' . $rw->name . ' | Medokan Semampir')
 
 @section('content')
     <!-- begin page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Tambah Data Pegawai RT {{$rt_id}}</h4>
+                <h4 class="mb-sm-0 font-size-18">Tambah Data Pegawai {{ $rw->name }}</h4>
 
                 <!-- begin breadcrumb -->
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Utama</a></li>
-                        <li class="breadcrumb-item active">Tambah Data Pegawai RT {{$rt_id}}</li>
+                        <li class="breadcrumb-item active">Tambah Data Pegawai{{$rw->name}}</li>
                     </ol>
                 </div>
                 <!-- end breadcrumb -->
@@ -32,14 +32,31 @@
                         <code>&lt;input&gt;</code> <code>type</code>.
                     </p>
 
-                    <form class="form" action="{{ route('staff-rt.store') }}" method="POST">
+                    <form class="form" action="{{ route('staff-rt.store', ['rw' => $rw->id]) }}" method="POST">
                         @csrf
 
-                        <input type="hidden" name="rt_id" value="{{ $rt_id }}">
+
+                        {{-- Field RT --}}
+                        <div class="mb-3 row"><label class="col-md-2 col-form-label">Pilih RT</label>
+                            <div class="col-md-10">
+                                <select class="form-control select2" name="rt" id="rt">
+                                    <option disabled selected>Pilih RT...</option>
+                                    @foreach ($rts as $rt)
+                                        <option value="{{ $rt->id }}">{{ $rw->name }} - {{ $rt->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('rt'))
+                                    <p class="text-danger mt-1">{{ $errors->first('rt') }}</p>
+                                @endif
+
+                            </div>
+                        </div>
+                        {{-- END Field RT --}}
 
                         <div class="mb-3 row"><label class="col-md-2 col-form-label">Jabatan</label>
                             <div class="col-md-10">
-                                <select class="form-control" name="staff_category" id="staff_category">
+                                <select class="form-control select2" name="staff_category" id="staff_category">
                                     <option disabled selected>Pilih Jabatan</option>
                                     @foreach ($staffCategories as $staffCategory)
                                         <option value="{{ $staffCategory->id }}">{{ $staffCategory->name }}</option>

@@ -60,6 +60,7 @@
                                             </tr>
                                         </thead>
                                         <tbody> --}}
+                                            <div class="row">
                                             @foreach ($staffRts[$rt->id] as $index => $staffRt)
                                             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                                                 <div class="card border border-secondary-subtle  shadow">
@@ -108,6 +109,7 @@
                                                 </div>
                                             </div>
                                             @endforeach
+                                        </div>
                                         {{-- </tbody> --}}
                                         {{-- <tfoot>
                                             <tr>
@@ -146,7 +148,7 @@
 @section('script')
     <script>
         // Menambahkan SweetAlert konfirmasi hapus
-        document.querySelectorAll('.btn-danger').forEach(function(button) {
+        document.querySelectorAll('.btn-outline-danger').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault(); // Mencegah form submit langsung
 
