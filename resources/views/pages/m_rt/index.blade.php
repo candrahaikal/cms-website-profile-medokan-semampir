@@ -30,7 +30,7 @@
 
                     {{-- <h4 class="card-title">Company</h4> --}}
                     <p class="card-title-desc">
-                        Berikut ini adalah tabel yang menunjukkan daftar RT yang ada di <span
+                        Berikut ini adalah tabel yang menunjukkan daftar RT yang ada di RW <span
                             class="fw-bold">{{ $rw_id }}</span> di Kelurahan Medokan Semampir.
                     </p>
 
@@ -81,10 +81,10 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                        <tfoot>
+                        {{-- <tfoot>
                             <tr>
                                 <th>#</th>
-                                {{-- <th>RW</th> --}}
+                                <th>RW</th>
                                 <th>Nama</th>
                                 <th>Jumlah Kepala Keluarga</th>
                                 <th>Jumlah Penduduk</th>
@@ -92,7 +92,7 @@
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
-                        </tfoot>
+                        </tfoot> --}}
                     </table>
                 </div>
             </div>
@@ -110,6 +110,12 @@
 @endsection
 
 @section('script')
+
+    // Sortable Js
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+    
+
     <script>
         // Menambahkan SweetAlert konfirmasi hapus
         document.querySelectorAll('.btn-danger').forEach(function(button) {

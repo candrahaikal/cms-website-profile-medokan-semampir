@@ -92,7 +92,7 @@
                                                 </tr>
                                             @endforeach
                                         </tbody>
-                                        <tfoot>
+                                        {{-- <tfoot>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama</th>
@@ -104,7 +104,7 @@
                                                 <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
-                                        </tfoot>
+                                        </tfoot> --}}
                                     </table>
                                 @else
                                     <div class="alert alert-warning">Belum ada UMKM untuk {{ $rt->name }}.</div>
