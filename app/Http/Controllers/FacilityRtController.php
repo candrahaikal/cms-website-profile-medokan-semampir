@@ -38,7 +38,9 @@ class FacilityRtController extends Controller
     public function create(Request $request)
     {
         $rw = MRw::find($request->rw);
-        return view('pages.facility_rt.add', compact('rw'));
+        $rts = MRt::where('rw_id', $rw->id)->get();
+
+        return view('pages.facility_rt.add', compact('rw', 'rts'));
     }
 
     /**
@@ -49,13 +51,18 @@ class FacilityRtController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $rw = MRw::find($request->rw);
 
         $validated = $request->validate([
+            'rt' => 'required',
             'name' => 'required|string|max:255',
             'image' => 'required|nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required|string|nullable',
+            // 'contact' => 'required|nullable ',
             'link_maps' => 'required|string|nullable',
+            // 'link_order' => 'required|string|nullable',
+            // 'date' => 'required|nullable',
             'status' => 'nullable',
         ]);
 
@@ -80,17 +87,22 @@ class FacilityRtController extends Controller
             $validated['image'] = 'uploads/' . $path;
         }
 
-        $newFacilityRt = FacilityRt::create([
+        $newFacility = FacilityRt::create([
+            'rt_id' => $validated['rt'],
             'rw_id' => $rw->id,
-            'name' => $request->name,
+            'name' => $validated['name'],
             'image' => $validated['image'],
-            'description' => $request->description,
-            'link_maps' => $request->link_maps,
+            'description' => $validated['description'],
+            // 'contact' => $validated['contact'],
+            'link_maps' => $validated['link_maps'],
+            // 'link_order' => $validated['link_order'],
+            // 'date' => $validated['date'],
+            // 'location' => $validated['location'],
             'status' => $request->status === "on" ? 1 : 0, // Checkbox menghasilkan boolean
         ]);
 
-        if ($newFacilityRt) {
-            return redirect()->route('facility-rw.index', ['rw' => $rw->id])->with('success', 'Data fasilitas berhasil ditambahkan.');
+        if ($newFacility) {
+            return redirect()->route('facility_rt.index', ['rw' => $rw->id])->with('success', 'Data Kegiatan berhasil ditambahkan.');
         }
     }
 

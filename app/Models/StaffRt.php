@@ -16,6 +16,7 @@ class StaffRt extends Model
         'name',
         'status',
         'staff_category_id'
+        
     ];
 
     public function rt()

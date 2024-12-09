@@ -17,7 +17,7 @@ class StaffRwController extends Controller
     {
 
         $rw_id = $request->rw;
-        $staffRws = StaffRw::with('rw', 'staffCategory')->where('rw_id', $rw_id)->get();
+        $staffRws = StaffRw::with('rw', 'staffCategory')->where('rw_id', $rw_id)->orderBy('staff_category_id')->get();
 
         return view('pages.staff_rw.index', compact('staffRws', 'rw_id'));
     }

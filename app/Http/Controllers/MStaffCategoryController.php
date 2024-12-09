@@ -104,22 +104,30 @@ class MStaffCategoryController extends Controller
     }
 
     public function updateOrder(Request $request)
-{
-    // Debug data yang diterima
-    dd($request->all());
+    {
+        try {
+            // Debug: Log semua data request
+            \Log::info('Request diterima:', $request->all());
 
-    $ids = $request->input('ids');
+            // Validasi input
+            $ids = $request->input('ids');
+            if (!is_array($ids)) {
+                return response()->json(['status' => 'error', 'message' => 'Data tidak valid.'], 400);
+            }
 
-    if (is_array($ids)) {
-        foreach ($ids as $index => $id) {
-            MStaffCategory::where('id', $id)->update(['order' => $index + 1]);
+            // Update data
+            foreach ($ids as $index => $id) {
+                MStaffCategory::where('id', $id)->update(['order' => $index + 1]);
+            }
+
+            return response()->json(['status' => 'success', 'message' => 'Urutan berhasil diperbarui.']);
+        } catch (\Exception $e) {
+            // Log error untuk debug
+            \Log::error('Error saat memperbarui urutan:', ['error' => $e->getMessage()]);
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan di server.'], 500);
         }
-
-        return response()->json(['status' => 'success', 'message' => 'Urutan berhasil diperbarui.']);
     }
 
-    return response()->json(['status' => 'error', 'message' => 'Data tidak valid.'], 400);
-}
 
 
 

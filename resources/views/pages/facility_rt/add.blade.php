@@ -33,25 +33,26 @@
                         ini.
                     </p>
 
-                    <form class="form" action="{{ route('facility-rw.store', ['rw' => $rw->id]) }}" method="POST"
+                    <form class="form" action="{{ route('facility-rt.store', ['rw' => $rw->id]) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
 
                         {{-- Field RT --}}
-                        {{-- <div class="mb-3 row"><label class="col-md-2 col-form-label">Pilih RT</label>
+                        <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Pilih RT</label>
                             <div class="col-md-10">
-                                <select class="form-control" name="staff_category" id="staff_category">
-                                    <option disabled selected>RT</option>
-                                    @foreach ($mRts as $mRt)
-                                        <option value="{{ $mRt->id }}">{{ $mRt->name }}</option>
+                                <select class="form-control select2" name="rt" id="rt">
+                                    <option disabled selected>Pilih RT...</option>
+                                    @foreach ($rts as $rts)
+                                        <option value="{{ $rts->id }}" >{{ $rw->name }} - {{ $rts->name }}
+                                        </option>
                                     @endforeach
                                 </select>
-                                @if ($errors->has('staff_category'))
-                                    <p class="text-danger mt-1">{{ $errors->first('staff_category') }}</p>
+                                @if ($errors->has('rt'))
+                                    <p class="text-danger mt-1">{{ $errors->first('rt') }}</p>
                                 @endif
-
                             </div>
-                        </div> --}}
+                        </div>
                         {{-- END Field RT --}}
 
 
@@ -90,8 +91,8 @@
                             <div class="col-md-10">
                                 <input class="form-control" id="link_maps" type="text" name="link_maps"
                                     placeholder="https://g.co/kgs/BstkDC6">
-                                @if ($errors->has('price'))
-                                    <p class="text-danger mt-1">{{ $errors->first('price') }}</p>
+                                @if ($errors->has('link_maps'))
+                                    <p class="text-danger mt-1">{{ $errors->first('link_maps') }}</p>
                                 @endif
                             </div>
                         </div>

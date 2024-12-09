@@ -54,8 +54,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $facility->name }}</td>
-                                    <td class="w-25"><img src="{{ asset($facility->image) }}" alt="gambar"
-                                            class="img-fluid"></td>
+                                    <td><img src="{{ asset($facility->image) }}" alt="gambar" style="height: 250px"></td>
                                     <td class="text-truncate">{!! $facility->description !!}</td>
                                     <td>
                                         @if ($facility->status == 1)

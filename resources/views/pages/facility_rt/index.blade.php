@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Daftar Fasilitas RT -  ' . $rw->name)
+@section('title', 'Daftar Fasilitas - ' . $rw->name)
 
 @section('content')
     <div class="row">
@@ -35,71 +35,59 @@
                     </ul>
 
                     <div class="tab-content mt-4" id="rtTabsContent">
+                        <div id="loading-spinner" class="d-none text-center my-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+
                         @foreach ($rts as $key => $rt)
                             <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="rt-{{ $rt->id }}"
                                 role="tabpanel" aria-labelledby="rt-tab-{{ $rt->id }}">
                                 @if ($facilities->has($rt->id) && $facilities[$rt->id]->count() > 0)
 
-                                <div class="row align-items-center mb-3">
-                                    <div class="col-md-9 col-12 mb-2 mb-md-0">
-                                        <p class="card-title-desc mb-0">
-                                            Berikut ini adalah tabel yang menunjukkan daftar pegawai <span
-                                                class="fw-bold">{{ $rt->name }}</span> di
-                                            lingkup <span class="fw-bold">{{ $rt->rw->name }}</span> yang ada di
-                                            kelurahan Medokan Semampir.
-                                        </p>
-                                    </div>
-                                    <div class="col-md-3 col-12 mb-2 mb-md-0">
-
-                                        <div class="d-flex justify-content-end mb-2">
-                                            <a href="{{ route('staff-rt.add', ['rt_id' => $rt->id]) }}"
-                                                class="btn btn-primary">
-                                                Tambah Pegawai RT
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                    <table id="datatable" class="table table-bordered dt-responsive nowrap w-100"
-                                        data-colvis="[]">
+                                    <table class="table table-bordered dt-responsive nowrap w-100"
+                                        id="table-rt-{{ $rt->id }}" data-colvis="[]" data-server-processing="false">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama</th>
                                                 <th>Gambar</th>
                                                 <th>Deskripsi</th>
+                                                <th>Lokasi</th>
                                                 <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-
                                         <tbody>
                                             @foreach ($facilities[$rt->id] as $index => $facility)
                                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $facility->name }}</td>
-                                    <td class="w-25"><img src="{{ asset($facility->image) }}" alt="gambar"
-                                            class="img-fluid"></td>
-                                    <td class="text-truncate">{!! $facility->description !!}</td>
-                                    <td>
-                                        @if ($facility->status == 1)
-                                            <span class="badge bg-success fs-6 p-2">Aktif</span>
-                                        @else
-                                            <span class="badge bg-secondary fs-6 p-2">Tidak Aktif</span>
-                                        @endif
-                                    </td>
-                                    <td class="data-small">
-                                        <a href="{{ route('facility-rw.edit', ['id' => $facility->id]) }}"
-                                            class="btn btn-success">Ubah</a>
-                                        <form
-                                            action="{{ route('facility-rw.delete', ['id' => $facility->id]) }}"
-                                            method="POST" class="d-inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $facility->name }}</td>
+                                                    <td class="w-25"><img src="{{ asset($facility->image) }}" alt="gambar"
+                                                            style="height: 250px"></td>
+                                                    <td>{!! Str::limit($facility->description, 50) !!}</td>
+                                                    <td>{{ $facility->location }}</td>
+                                                    <td>
+                                                        @if ($facility->status == 1)
+                                                                <span class="badge badge-soft-success fs-6">Aktif</span>
+                                                            @else
+                                                                <span class="badge badge-soft-danger fs-6">Tidak
+                                                                    Aktif</span>
+                                                            @endif
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('event.edit', ['id' => $facility->id]) }}"
+                                                            class="btn btn-success">Ubah</a>
+                                                        <form action="{{ route('event.delete', ['id' => $facility->id]) }}"
+                                                            method="POST" class="d-inline-block">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-danger">Hapus</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                         {{-- <tfoot>
@@ -108,18 +96,26 @@
                                                 <th>Nama</th>
                                                 <th>Gambar</th>
                                                 <th>Deskripsi</th>
+                                                <th>Tangggal</th>
+                                                <th>Lokasi</th>
                                                 <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </tfoot> --}}
                                     </table>
                                 @else
-                                    <div class="alert alert-warning">Belum ada fasilitas untuk {{ $rt->name }}.
-                                    </div>
+                                    <div class="alert alert-warning">Belum ada Fasilitas untuk {{ $rt->name }}.</div>
                                 @endif
                             </div>
                         @endforeach
                     </div>
+                    <!-- FAB add starts -->
+                    <div id="floating-add-button">
+                        <a href="{{ route('facility-rt.add', ['rw' => $rw->id]) }}">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                    <!-- FAB add ends -->
                 </div>
             </div>
         </div>
@@ -137,7 +133,7 @@
 
                 Swal.fire({
                     title: 'Apakah Anda yakin?',
-                    text: "Data RT ini akan dihapus secara permanen.",
+                    text: "Data ini akan dihapus secara permanen.",
                     icon: 'error',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, Hapus!',

@@ -84,7 +84,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [StaffRtController::class, 'store'])->name('staff-rt.store');
         Route::get('/edit/{id}', [StaffRtController::class, 'edit'])->name('staff-rt.edit');
         Route::post('/update/{id}', [StaffRtController::class, 'update'])->name('staff-rt.update');
-        Route::delete('/delete/{rt_id}/{id}', [StaffRtController::class, 'destroy'])->name('staff-rt.delete');
+        Route::delete('/delete/{id}', [StaffRtController::class, 'destroy'])->name('staff-rt.delete');
     });
 
     // Route Event

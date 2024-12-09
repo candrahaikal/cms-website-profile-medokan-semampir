@@ -16,25 +16,25 @@ class StaffRtController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-{
-    $rwId = $request->rw;
-    $rw = MRw::find($rwId);
+    {
+        $rwId = $request->rw;
+        $rw = MRw::find($rwId);
 
-    // Ambil semua RT di bawah RW tertentu
-    $rts = MRt::where('rw_id', $rwId)->get();
+        // Ambil semua RT di bawah RW tertentu
+        $rts = MRt::where('rw_id', $rwId)->get();
 
-    // dd($rts);
+        // dd($rts);
 
-    // Ambil pegawai RT pertama sebagai data default yang ditampilkan
-    $rt_id = $rts->first()->id ?? null;
+        // Ambil pegawai RT pertama sebagai data default yang ditampilkan
+        $rt_id = $rts->first()->id ?? null;
 
-    $staffRts = StaffRt::with('rt', 'staffCategory')
-        ->whereIn('rt_id', $rts->pluck('id'))
-        ->get()
-        ->groupBy('rt_id'); // Kelompokkan pegawai berdasarkan RT
+        $staffRts = StaffRt::with('rt', 'staffCategory')
+            ->whereIn('rt_id', $rts->pluck('id'))
+            ->get()
+            ->groupBy('rt_id'); // Kelompokkan pegawai berdasarkan RT
 
-    return view('pages.staff_rt.index', compact('staffRts', 'rts', 'rwId', 'rt_id', 'rw'));
-}
+        return view('pages.staff_rt.index', compact('staffRts', 'rts', 'rwId', 'rt_id', 'rw'));
+    }
 
 
     /**
@@ -110,11 +110,12 @@ class StaffRtController extends Controller
      */
     public function edit(Request $request)
     {
-        $staffRw = StaffRt::findOrFail($request->id);
-        $rt_id = $staffRw->rt_id;
+        $staffRt = StaffRt::findOrFail($request->id);
+        $rt_id = $staffRt->rt_id;
+        $rw = MRt::find($rt_id)->rw;
         $staffCategories = MStaffCategory::all();
 
-        return view('pages.staff_rt.edit', compact('staffRw', 'rt_id', 'staffCategories'));
+        return view('pages.staff_rt.edit', compact('staffRt', 'rt_id', 'staffCategories', 'rw'));
     }
 
     /**
@@ -165,26 +166,25 @@ class StaffRtController extends Controller
      * @param  \App\Models\StaffRt  $staffRw
      * @return \Illuminate\Http\Response
      */
-    public function destroy($rt_id, $id)
-{
-    // Cari data StaffRt berdasarkan ID dan RT_ID
-    $staffRt = StaffRt::where('id', $id)->where('rt_id', $rt_id)->first();
-    $rw = $staffRt->rt->rw_id;
+    public function destroy(Request $request)
+    {
+        // Cari data StaffRt berdasarkan ID dan RT_ID
+        $staffRt = StaffRt::find($request->id);
+        $rw = $staffRt->rt->rw_id;
 
-    if (!$staffRt) {
-        return redirect()->route('staff-rt.index', ['rw' => $rw])
-            ->with('error', 'Data Pegawai RT tidak ditemukan.');
+        if (!$staffRt) {
+            return redirect()->route('staff-rt.index', ['rw' => $rw])
+                ->with('error', 'Data Pegawai RT tidak ditemukan.');
+        }
+
+        try {
+            // Hapus data
+            $staffRt->delete();
+            return redirect()->route('staff-rt.index', ['rw' => $rw])
+                ->with('success', 'Pegawai RT berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('staff-rt.index', ['rw' => $rw])
+                ->with('error', 'Gagal menghapus Pegawai RT. Silakan coba lagi.');
+        }
     }
-
-    try {
-        // Hapus data
-        $staffRt->delete();
-        return redirect()->route('staff-rt.index', ['rw' => $rw])
-            ->with('success', 'Pegawai RT berhasil dihapus.');
-    } catch (\Exception $e) {
-        return redirect()->route('staff-rt.index', ['rw' => $rw])
-            ->with('error', 'Gagal menghapus Pegawai RT. Silakan coba lagi.');
-    }
-}
-
 }

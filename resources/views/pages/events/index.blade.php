@@ -65,7 +65,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $event->name }}</td>
                                                     <td class="w-25"><img src="{{ asset($event->image) }}" alt="gambar"
-                                                            class="img-fluid"></td>
+                                                            style="height: 250px"></td>
                                                     <td>{!! Str::limit($event->description, 50) !!}</td>
                                                     <td>{{ $event->date }}</td>
                                                     <td>{{ $event->location }}</td>

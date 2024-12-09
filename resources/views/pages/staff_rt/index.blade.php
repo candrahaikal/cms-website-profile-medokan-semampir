@@ -1,127 +1,71 @@
 @extends('layouts.main')
 
-@section('title', 'Daftar Pegawai RT ' . ' ' . ' | Medokan Semampir')
+@section('title', 'Daftar Pegawai - ' . $rw->name)
 
 @section('content')
-    <!-- begin page title -->
     <div class="row">
         <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Daftar Pegawai RT - {{ $rw->name }}</h4>
-
-                <!-- begin breadcrumb -->
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">Daftar Pegawai {{ $rw->name }}</h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Utama</a></li>
-                        <li class="breadcrumb-item active">Daftar Pegawai RT - {{ $rw->name }}</li>
+                        <li class="breadcrumb-item"><a href="#">Utama</a></li>
+                        <li class="breadcrumb-item active">Pegawai</li>
                     </ol>
                 </div>
-                <!-- end breadcrumb -->
             </div>
         </div>
     </div>
-    <!-- end page title -->
 
-    <!-- begin content -->
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    {{-- <h4 class="card-title">Daftar Pegawai RT di RW {{ $rwId }}</h4> --}}
-                    <ul class="nav nav-pills nav-justified {{ $rts->count() <= 1 ? '' : 'mb-5' }}" role="tablist">
-                        @if ($rts->count() > 1)
-
-                            @foreach ($rts as $index => $rt)
-                                <div class="col-lg-2">
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $index === 0 ? 'active' : '' }}" data-bs-toggle="tab"
-                                            href="#rt-{{ $rt->id }}" role="tab">
-                                            {{ $rt->name }}
-                                        </a>
-                                    </li>
-                                </div>
-                            @endforeach
-                        @elseif($rts->count() === 1)
-                            <div class="row">
-                                <div class="col-5 mb-5">
-                                    {{-- <button class="btn btn-primary mb-5">{{ $rts->first()->name }}</button> --}}
-                                    <li class="nav-item">
-                                        <a class="nav-link active " data-bs-toggle="tab" href="#rt-{{ $rts->first()->id }}"
-                                            role="tab">
-                                            {{ $rts->first()->name }}
-                                        </a>
-                                    </li>
-                                </div>
-                            </div>
-                            {{-- <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#rt-{{ $rts->first()->id }}"
-                                    role="tab">
-                                    {{ $rts->first()->name }}
+                    <ul class="nav nav-tabs nav-justified" id="rtTabs" role="tablist">
+                        @foreach ($rts as $key => $rt)
+                            <li class="nav-item">
+                                <a class="nav-link {{ $key == 0 ? 'active' : '' }}" id="rt-tab-{{ $rt->id }}"
+                                    data-bs-toggle="tab" href="#rt-{{ $rt->id }}" role="tab"
+                                    aria-controls="rt-{{ $rt->id }}"
+                                    aria-selected="{{ $key == 0 ? 'true' : 'false' }}">
+                                    {{ $rt->name }}
                                 </a>
-                            </li> --}}
-                        @else
-                            <div class="col-12">
-                                <div class="alert alert-warning text-center" role="alert">Belum ada RT di
-                                    {{ $rw->name }}</div>
-                            </div>
-
-                        @endif
+                            </li>
+                        @endforeach
                     </ul>
 
-                    {{-- <div class="card"> --}}
-                    {{-- <div class="card-body"> --}}
-                    <div class="tab-content">
+                    <div class="tab-content mt-4" id="rtTabsContent">
+                        <div id="loading-spinner" class="d-none text-center my-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
 
-                        {{-- <div class="d-flex justify-content-end mb-2">
-                            <a href="{{ route('staff-rt.add', ['rt_id' => $rt->id]) }}" class="btn btn-primary">
-                                Tambah Pegawai RT
-                            </a>
-                        </div> --}}
-
-                        @foreach ($rts as $index => $rt)
-                            <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="rt-{{ $rt->id }}"
-                                role="tabpanel">
-                                @if ($staffRts->has($rt->id))
-                                    {{-- <div class="d-flex justify-content-between align-items-center mb-3"> --}}
-
-
-                                    <!-- FAB add starts -->
-                                    {{-- <div id="floating-add-button">
-                                                    <a href="{{ route('staff-rt.add', ['rt_id' => $rt_id]) }}">
-                                                        <i class="fas fa-plus"></i>
-                                                    </a>
-                                                </div> --}}
-                                    <!-- FAB add ends -->
-                                    {{-- </div> --}}
-
-                                    <div class="row align-items-center mb-3">
-                                        <div class="col-md-9 col-12 mb-2 mb-md-0">
-                                            <p class="card-title-desc mb-0">
-                                                Berikut ini adalah tabel yang menunjukkan daftar pegawai <span
-                                                    class="fw-bold">{{ $rt->name }}</span> di
-                                                lingkup <span class="fw-bold">{{ $rt->rw->name }}</span> yang ada di
-                                                kelurahan Medokan Semampir.
-                                            </p>
-                                        </div>
-                                        <div class="col-md-3 col-12 mb-2 mb-md-0">
-
-                                            <div class="d-flex justify-content-end mb-2">
-                                                <a href="{{ route('staff-rt.add', ['rt_id' => $rt->id]) }}"
-                                                    class="btn btn-primary">
-                                                    Tambah Pegawai RT
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                        @foreach ($staffRts[$rt->id] as $staffRw)
+                        @foreach ($rts as $key => $rt)
+                            <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="rt-{{ $rt->id }}"
+                                role="tabpanel" aria-labelledby="rt-tab-{{ $rt->id }}">
+                                @if ($staffRts->has($rt->id) && $staffRts[$rt->id]->count() > 0)
+                                
+                                    {{-- <table class="table table-bordered dt-responsive nowrap w-100"
+                                        id="table-rt-{{ $rt->id }}" data-colvis="[]" data-server-processing="false">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nama</th>
+                                                <th>Gambar</th>
+                                                <th>Deskripsi</th>
+                                                <th>Lokasi</th>
+                                                <th>Status</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> --}}
+                                            @foreach ($staffRts[$rt->id] as $index => $staffRt)
                                             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                                                 <div class="card border border-secondary-subtle  shadow">
                                                     <div class="card-body">
                                                         <div class="d-flex justify-content-between align-items-start mb-3">
-                                                            @if ($staffRw->status == 1)
+                                                            @if ($staffRt->status == 1)
                                                                 <span class="badge badge-soft-success fs-6">Aktif</span>
                                                             @else
                                                                 <span class="badge badge-soft-danger fs-6">Tidak
@@ -132,27 +76,27 @@
                                                             <img src="{{ asset('assets/images/default_profile.png') }}"
                                                                 alt="Profile Picture"
                                                                 class="avatar-sm rounded-circle border border-secondary-subtle">
-                                                            <h6 class="font-size-15 mt-3 mb-1">{{ $staffRw->name }}</h6>
-                                                            <p class="mb-0 text-muted">{{ $staffRw->staffCategory->name }}
+                                                            <h6 class="font-size-15 mt-3 mb-1">{{ $staffRt->name }}</h6>
+                                                            <p class="mb-0 text-muted">{{ $staffRt->staffCategory->name }}
                                                             </p>
                                                         </div>
                                                         <div class="mt-4">
                                                             <div class="row">
                                                                 <div class="col-6">
-                                                                    <a href="{{ route('staff-rt.edit', ['id' => $staffRw->id]) }}"
+                                                                    <a href="{{ route('staff-rt.edit', ['id' => $staffRt->id]) }}"
                                                                         class="btn btn-primary w-100">Edit</a>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <form
-                                                                        action="{{ route('staff-rt.delete', ['rt_id' => $rt->id, 'id' => $staffRw->id]) }}"
+                                                                        action="{{ route('staff-rt.delete', ['rt_id' => $rt->id, 'id' => $staffRt->id]) }}"
                                                                         method="POST"
-                                                                        id="delete-form-{{ $staffRw->id }}">
+                                                                        id="delete-form-{{ $staffRt->id }}">
                                                                         @csrf
                                                                         @method('DELETE')
                                                                         <button type="button"
                                                                             class="btn btn-outline-danger w-100 btn-delete"
-                                                                            data-id="{{ $staffRw->id }}"
-                                                                            data-name="{{ $staffRw->name }}">
+                                                                            data-id="{{ $staffRt->id }}"
+                                                                            data-name="{{ $staffRt->name }}">
                                                                             Hapus
                                                                         </button>
                                                                     </form>
@@ -163,55 +107,55 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    </div>
+                                            @endforeach
+                                        {{-- </tbody> --}}
+                                        {{-- <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nama</th>
+                                                <th>Gambar</th>
+                                                <th>Deskripsi</th>
+                                                <th>Tangggal</th>
+                                                <th>Lokasi</th>
+                                                <th>Status</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </tfoot> --}}
+                                    {{-- </table> --}}
                                 @else
-                                    <div class="d-flex justify-content-end mb-2">
-                                        <a href="{{ route('staff-rt.add', ['rt_id' => $rt->id]) }}"
-                                            class="btn btn-primary">
-                                            Tambah Pegawai RT
-                                        </a>
-                                    </div>
-                                    <div class="alert alert-warning text-center">Belum ada pegawai di <span
-                                            class="fw-bold">{{ $rt->name }}</span></div>
+                                    <div class="alert alert-warning">Belum ada Pegawai untuk {{ $rt->name }}.</div>
                                 @endif
                             </div>
                         @endforeach
+
+                        
                     </div>
-                    {{-- </div> --}}
-                    {{-- </div> --}}
+                    <!-- FAB add starts -->
+                    <div id="floating-add-button">
+                        <a href="{{ route('staff-rt.add', ['rw' => $rw->id]) }}">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                    <!-- FAB add ends -->
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- end content -->
-
-    {{-- <!-- FAB add starts -->
-    <div id="floating-add-button">
-        <a href="{{ route('staff-rt.add', ['rt_id' => $rt_id]) }}">
-            <i class="fas fa-plus"></i>
-        </a>
-    </div>
-    <!-- FAB add ends --> --}}
 @endsection
 
 @section('script')
     <script>
-        // Seleksi semua tombol hapus berdasarkan kelas dan tambahkan event listener
-        document.querySelectorAll('.btn-delete').forEach(function(button) {
+        // Menambahkan SweetAlert konfirmasi hapus
+        document.querySelectorAll('.btn-danger').forEach(function(button) {
             button.addEventListener('click', function(event) {
-                event.preventDefault(); // Mencegah aksi default tombol
+                event.preventDefault(); // Mencegah form submit langsung
 
-                const id = this.getAttribute('data-id'); // Ambil ID dari atribut data-id
-                const name = this.getAttribute('data-name'); // Ambil nama dari atribut data-name
-                const form = document.getElementById(`delete-form-${id}`); // Seleksi form spesifik
+                const form = this.closest('form'); // Ambil form yang terdekat
 
-                // SweetAlert konfirmasi
                 Swal.fire({
                     title: 'Apakah Anda yakin?',
-                    text: `Pegawai "${name}" akan dihapus secara permanen.`,
-                    icon: 'warning',
+                    text: "Data ini akan dihapus secara permanen.",
+                    icon: 'error',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, Hapus!',
                     confirmButtonColor: '#dc3545',
@@ -219,7 +163,7 @@
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        form.submit(); // Submit form jika pengguna mengkonfirmasi
+                        form.submit(); // Submit form jika konfirmasi "Ya, Hapus!"
                     }
                 });
             });
