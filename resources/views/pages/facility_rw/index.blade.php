@@ -34,50 +34,54 @@
                         Berikut ini adalah tabel yang menunjukkan daftar Fasilitas {{ $rw->name }} yang ada di Kelurahan
                         Medokan Semampir.
                     </p>
-                    
+
                     @if ($facilities->count() > 0)
 
-                    <table id="datatable" class="table table-bordered dt-responsive nowrap w-100" data-colvis="[]">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama</th>
-                                <th>Gambar</th>
-                                <th>Deskripsi</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach ($facilities as $facility)
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap w-100" data-colvis="[]">
+                            <thead>
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $facility->name }}</td>
-                                    <td><img src="{{ asset($facility->image) }}" alt="gambar" style="height: 250px"></td>
-                                    <td class="text-truncate">{!! $facility->description !!}</td>
-                                    <td>
-                                        @if ($facility->status == 1)
-                                            <span class="badge bg-success fs-6 p-2">Aktif</span>
-                                        @else
-                                            <span class="badge bg-secondary fs-6 p-2">Tidak Aktif</span>
-                                        @endif
-                                    </td>
-                                    <td class="data-small">
-                                        <a href="{{ route('facility-rw.edit', ['id' => $facility->id]) }}"
-                                            class="btn btn-success">Ubah</a>
-                                        <form
-                                            action="{{ route('facility-rw.delete', ['id' => $facility->id]) }}"
-                                            method="POST" class="d-inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                        </form>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Gambar</th>
+                                    <th>Deskripsi</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                        {{-- <tfoot>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($facilities as $facility)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $facility->name }}</td>
+                                        @if ($facility->image)
+                                            <td><img src="{{ asset($facility->image) }}" alt="gambar"
+                                                    style="height: 250px"></td>
+                                        @else
+                                            <td class="fst-italic">Belum ada gambar</td>
+                                        @endif
+                                        <td class="text-truncate">{!! $facility->description !!}</td>
+                                        <td>
+                                            @if ($facility->status == 1)
+                                                <span class="badge bg-success fs-6 p-2">Aktif</span>
+                                            @else
+                                                <span class="badge bg-secondary fs-6 p-2">Tidak Aktif</span>
+                                            @endif
+                                        </td>
+                                        <td class="data-small">
+                                            <a href="{{ route('facility-rw.edit', ['id' => $facility->id]) }}"
+                                                class="btn btn-success">Ubah</a>
+                                            <form action="{{ route('facility-rw.delete', ['id' => $facility->id]) }}"
+                                                method="POST" class="d-inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            {{-- <tfoot>
                             <tr>
                                 <th>#</th>
                                 <th>Nama</th>
@@ -87,11 +91,12 @@
                                 <th>Aksi</th>
                             </tr>
                         </tfoot> --}}
-                    </table>
+                        </table>
                     @else
-                    <div class="col-12">
-                        <div class="alert alert-warning text-center" role="alert">Belum ada data fasilitas di {{ $rw->name }}</div>
-                    </div>
+                        <div class="col-12">
+                            <div class="alert alert-warning text-center" role="alert">Belum ada data fasilitas di
+                                {{ $rw->name }}</div>
+                        </div>
                     @endif
                 </div>
             </div>

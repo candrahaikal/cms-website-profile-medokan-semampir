@@ -46,9 +46,9 @@ class FacilityRwController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'required|nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required|string|nullable',
-            'link_maps' => 'required|string|nullable',
+            'link_maps' => 'nullable',
             'status' => 'nullable',
         ]);
 
@@ -76,7 +76,7 @@ class FacilityRwController extends Controller
         $newFacilityRw = FacilityRw::create([
             'rw_id' => $rw->id,
             'name' => $request->name,
-            'image' => $validated['image'],
+            'image' => $validated['image'] ?? null,
             'description' => $request->description,
             'link_maps' => $request->link_maps,
             'status' => $request->status === "on" ? 1 : 0, // Checkbox menghasilkan boolean

@@ -45,7 +45,6 @@
                             <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="rt-{{ $rt->id }}"
                                 role="tabpanel" aria-labelledby="rt-tab-{{ $rt->id }}">
                                 @if ($facilities->has($rt->id) && $facilities[$rt->id]->count() > 0)
-
                                     <table class="table table-bordered dt-responsive nowrap w-100"
                                         id="table-rt-{{ $rt->id }}" data-colvis="[]" data-server-processing="false">
                                         <thead>
@@ -64,27 +63,31 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $facility->name }}</td>
-                                                    <td class="w-25"><img src="{{ asset($facility->image) }}" alt="gambar"
-                                                            style="height: 250px"></td>
+                                                    @if ($facility->image)
+                                                        <td class="w-25"><img src="{{ asset($facility->image) }}"
+                                                                alt="gambar" style="height: 250px"></td>
+                                                    @else
+                                                        <td class="fst-italic">Belum ada gambar</td>
+                                                    @endif
                                                     <td>{!! Str::limit($facility->description, 50) !!}</td>
                                                     <td>{{ $facility->location }}</td>
                                                     <td>
                                                         @if ($facility->status == 1)
-                                                                <span class="badge badge-soft-success fs-6">Aktif</span>
-                                                            @else
-                                                                <span class="badge badge-soft-danger fs-6">Tidak
-                                                                    Aktif</span>
-                                                            @endif
+                                                            <span class="badge badge-soft-success fs-6">Aktif</span>
+                                                        @else
+                                                            <span class="badge badge-soft-danger fs-6">Tidak
+                                                                Aktif</span>
+                                                        @endif
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('event.edit', ['id' => $facility->id]) }}"
+                                                        <a href="{{ route('facility-rt.edit', ['id' => $facility->id]) }}"
                                                             class="btn btn-success">Ubah</a>
-                                                        <form action="{{ route('event.delete', ['id' => $facility->id]) }}"
+                                                        <form
+                                                            action="{{ route('facility-rt.delete', ['id' => $facility->id]) }}"
                                                             method="POST" class="d-inline-block">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn btn-danger">Hapus</button>
+                                                            <button type="submit" class="btn btn-danger">Hapus</button>
                                                         </form>
                                                     </td>
                                                 </tr>

@@ -64,18 +64,22 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $event->name }}</td>
-                                                    <td class="w-25"><img src="{{ asset($event->image) }}" alt="gambar"
-                                                            style="height: 250px"></td>
+                                                    @if ($event->image)
+                                                        <td class="w-25"><img src="{{ asset($event->image) }}"
+                                                                alt="gambar" style="height: 250px"></td>
+                                                    @else
+                                                        <td class="fst-italic">Belum ada gambar</td>
+                                                    @endif
                                                     <td>{!! Str::limit($event->description, 50) !!}</td>
                                                     <td>{{ $event->date }}</td>
                                                     <td>{{ $event->location }}</td>
                                                     <td>
                                                         @if ($event->status == 1)
-                                                                <span class="badge badge-soft-success fs-6">Aktif</span>
-                                                            @else
-                                                                <span class="badge badge-soft-danger fs-6">Tidak
-                                                                    Aktif</span>
-                                                            @endif
+                                                            <span class="badge badge-soft-success fs-6">Aktif</span>
+                                                        @else
+                                                            <span class="badge badge-soft-danger fs-6">Tidak
+                                                                Aktif</span>
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <a href="{{ route('event.edit', ['id' => $event->id]) }}"
@@ -84,8 +88,7 @@
                                                             method="POST" class="d-inline-block">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn btn-danger">Hapus</button>
+                                                            <button type="submit" class="btn btn-danger">Hapus</button>
                                                         </form>
                                                     </td>
                                                 </tr>

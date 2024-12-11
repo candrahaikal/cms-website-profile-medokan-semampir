@@ -57,13 +57,13 @@ class EventController extends Controller
         $validated = $request->validate([
             'rt' => 'required',
             'name' => 'required|string|max:255',
-            'image' => 'required|nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required|string|nullable',
             // 'contact' => 'required|nullable ',
             // 'link_maps' => 'required|string|nullable',
             // 'link_order' => 'required|string|nullable',
-            'date' => 'required|nullable',
-            'location' => 'required|nullable',
+            'date' => 'nullable',
+            'location' => 'nullable',
             'status' => 'nullable',
         ]);
 
@@ -92,13 +92,13 @@ class EventController extends Controller
             'rt_id' => $validated['rt'],
             'rw_id' => $rw->id,
             'name' => $validated['name'],
-            'image' => $validated['image'],
+            'image' => $validated['image'] ?? null,
             'description' => $validated['description'],
             // 'contact' => $validated['contact'],
             // 'link_maps' => $validated['link_maps'],
             // 'link_order' => $validated['link_order'],
-            'date' => $validated['date'],
-            'location' => $validated['location'],
+            'date' => $validated['date'] ?? null,
+            'location' => $validated['location'] ?? null,
             'status' => $request->status === "on" ? 1 : 0, // Checkbox menghasilkan boolean
         ]);
 

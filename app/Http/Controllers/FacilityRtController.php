@@ -57,10 +57,10 @@ class FacilityRtController extends Controller
         $validated = $request->validate([
             'rt' => 'required',
             'name' => 'required|string|max:255',
-            'image' => 'required|nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required|string|nullable',
             // 'contact' => 'required|nullable ',
-            'link_maps' => 'required|string|nullable',
+            'link_maps' => 'nullable',
             // 'link_order' => 'required|string|nullable',
             // 'date' => 'required|nullable',
             'status' => 'nullable',
@@ -91,10 +91,10 @@ class FacilityRtController extends Controller
             'rt_id' => $validated['rt'],
             'rw_id' => $rw->id,
             'name' => $validated['name'],
-            'image' => $validated['image'],
+            'image' => $validated['image'] ?? null,
             'description' => $validated['description'],
             // 'contact' => $validated['contact'],
-            'link_maps' => $validated['link_maps'],
+            'link_maps' => $request->link_maps,
             // 'link_order' => $validated['link_order'],
             // 'date' => $validated['date'],
             // 'location' => $validated['location'],
@@ -102,7 +102,7 @@ class FacilityRtController extends Controller
         ]);
 
         if ($newFacility) {
-            return redirect()->route('facility_rt.index', ['rw' => $rw->id])->with('success', 'Data Kegiatan berhasil ditambahkan.');
+            return redirect()->route('facility-rt.index', ['rw' => $rw->id])->with('success', 'Data Kegiatan berhasil ditambahkan.');
         }
     }
 

@@ -65,17 +65,21 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $umkm->name }}</td>
-                                                    <td class="w-50"><img src="{{ asset($umkm->image) }}" alt="gambar"
-                                                            class="img-fluid"></td>
-                                                    <td>{{ Str::limit($umkm->description, 50) }}</td>
-                                                    <td>{{ $umkm->contact }}</td>
-                                                    <td>{{ $umkm->link_maps }}</td>
-                                                    <td>{{ $umkm->link_order }}</td>
+                                                    @if ($umkm->image == null)
+                                                        <td class="fst-italic">Belum ada gambar</td>
+                                                    @else
+                                                        <td class="w-50"><img src="{{ asset($umkm->image) }}"
+                                                                alt="gambar" class="img-fluid"></td>
+                                                    @endif
+                                                    <td>{!! Str::limit($umkm->description, 50) ?? '-' !!}</td>
+                                                    <td>{{ $umkm->contact ?? '-' }}</td>
+                                                    <td>{{ $umkm->link_maps ?? '-'}}</td>
+                                                    <td>{{ $umkm->link_order ?? '-' }}</td>
                                                     <td>
                                                         @if ($umkm->status == 1)
-                                                            <span class="badge bg-success">Aktif</span>
+                                                            <span class="badge fs-6 p-2 bg-success">Aktif</span>
                                                         @else
-                                                            <span class="badge bg-secondary">Tidak Aktif</span>
+                                                            <span class="badge fs-6 p-2 bg-secondary">Tidak Aktif</span>
                                                         @endif
                                                     </td>
                                                     <td>
@@ -85,8 +89,7 @@
                                                             method="POST" class="d-inline-block">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn btn-danger">Hapus</button>
+                                                            <button type="submit" class="btn btn-danger">Hapus</button>
                                                         </form>
                                                     </td>
                                                 </tr>
