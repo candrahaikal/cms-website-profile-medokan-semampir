@@ -156,8 +156,8 @@ class EventController extends Controller
             // 'contact' => 'nullable',
             // 'link_maps' => 'nullable|string',
             // 'link_order' => 'nullable|string',
-            'date' => 'required|nullable',
-            'location' => 'required|nullable',
+            'date' => 'nullable',
+            'location' => 'nullable',
             'status' => 'nullable',
         ]);
 

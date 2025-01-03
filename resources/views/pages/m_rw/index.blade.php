@@ -53,7 +53,7 @@
                                     <td class="text-truncate">-</td>
                                     @else
 
-                                    <td class="text-truncate">{!! $rw->description !!}</td>
+                                    <td class="text-truncate">{!! Str::limit($rw->description, 40) !!}</td>
                                     @endif
                                     <td>
                                         @if ($rw->status == 1)

@@ -53,7 +53,7 @@
                                                 <th>Nama</th>
                                                 <th>Gambar</th>
                                                 <th>Deskripsi</th>
-                                                <th>Tangggal</th>
+                                                <th>Tanggal</th>
                                                 <th>Lokasi</th>
                                                 <th>Status</th>
                                                 <th>Aksi</th>
@@ -64,12 +64,15 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $event->name }}</td>
-                                                    @if ($event->image)
-                                                        <td class="w-25"><img src="{{ asset($event->image) }}"
-                                                                alt="gambar" style="height: 250px"></td>
+                                                    <td>
+                                                        @if ($event->image)
+                                                        <img src="{{ asset($event->image) }}"
+                                                                alt="gambar" style="height: 250px">
                                                     @else
-                                                        <td class="fst-italic">Belum ada gambar</td>
+                                                        <p class="fst-italic">Tidak ada gambar</p>
                                                     @endif
+                                                    </td>
+                                                    
                                                     <td>{!! Str::limit($event->description, 50) !!}</td>
                                                     <td>{{ $event->date }}</td>
                                                     <td>{{ $event->location }}</td>
